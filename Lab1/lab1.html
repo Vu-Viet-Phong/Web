@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="script.js">
+        <title>Lab 1</title>
+    </head>
+
+    <body>
+        <h3>Vu Viet Phong</h4>
+        <h4>ID: ITDSIU19048.</h4>
+        <h4>Course: Data science and data visualization</h4>
+        <h4 id="lab-title">Lab 1 – Introduction to HTML, CSS, SVG, and JavaScript</h3>         
+        <p>This is all my own work. I did not copy the code from any other source<p>
+    
+        <svg id="initials" width="250" height="150">
+            <rect x='0' y = '0' width="250" height="150" style="fill:rgb(242, 242, 243);stroke-width:5;stroke:rgb(0,0,0)"/>
+            
+            <text x="60" y="20">VU VIET PHONG</text>
+
+            <line x1="20" y1="60" x2="50" y2="120" stroke="green" stroke-width = "10" stroke-linecap = "round"/> 
+            <line x1="50" y1="120" x2="80" y2="60" stroke="green" stroke-width = "10" stroke-linecap = "round"/>
+
+            <line x1="100" y1="60" x2="130" y2="120" stroke="green" stroke-width = "10" stroke-linecap = "round"/> 
+            <line x1="130" y1="120" x2="160" y2="60" stroke="green" stroke-width = "10" stroke-linecap = "round"/>
+
+            <line x1="180" y1="60" x2="180" y2="120" stroke="green" stroke-width = "10" stroke-linecap = "round"/>
+            <line x1="180" y1="60" x2="230" y2="60" stroke="green" stroke-width = "10" stroke-linecap = "round"/> 
+            <line x1="230" y1="60" x2="230" y2="90" stroke="green" stroke-width = "10" stroke-linecap = "round"/> 
+            <line x1="230" y1="90" x2="180" y2="90" stroke="green" stroke-width = "10" stroke-linecap = "round"/> 
+        </svg>
+
+        <br>
+        <svg id="histogram" width="300" height="400">
+            <!—YOUR SVG HERE ->
+        </svg>
+            
+        <script type="text/javascript">
+            function addEltToSVG(svg, name, attrs)	{
+                var element = document.createElementNS("http://www.w3.org/2000/svg", name);
+                
+                if (attrs === undefined) attrs = {};
+                
+                for (var key in attrs) {
+                    element.setAttributeNS(null, key, attrs[key]);
+                }
+                
+                svg.appendChild(element);
+            }
+                
+            function createHistogram(svg, name) {
+                var arr = [0,0,0,0,0,0]; 
+
+                name = name.toLowerCase();
+                                
+                for (var i = 0; i < name.length; i++) {
+                    var code = name.charCodeAt(i);
+                    if (code >= 97 && code < 101) arr[0]++;
+                    if (code >= 101 && code < 105) arr[1]++;
+                    if (code >= 105 && code < 109) arr[2]++;
+                    if (code >= 109 && code < 113) arr[3]++;
+                    if (code >= 113 && code < 118) arr[4]++;
+                    if (code >= 118 && code < 123) arr[5]++;
+                }
+                    
+                for (var i = 0; i < arr.length; i++) {
+                    var attrs = {"x": 50 * i, "y": 165, "height": arr[i] * 50, "width": 50, "fill": "blue", "stroke": "black"};
+                    if (attrs.height === 0) attrs.height = 1;
+                    addEltToSVG(svg, "rect", attrs);
+                }                
+            }
+
+            var svgElement = document.getElementById("histogram");
+            createHistogram(svgElement, "Phong");
+        </script>
+    </body>
+</html>
