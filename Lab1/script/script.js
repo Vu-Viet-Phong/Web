@@ -14,7 +14,7 @@ function createHistogram(svg, name) {
     var arr = [0,0,0,0,0,0]; 
 
     name = name.toLowerCase();
-                       
+                    
     for (var i = 0; i < name.length; i++) {
         var code = name.charCodeAt(i);
         if (code >= 97 && code < 101) arr[0]++;
@@ -25,9 +25,12 @@ function createHistogram(svg, name) {
         if (code >= 118 && code < 123) arr[5]++;
     }
         
-    for (var i = 0; i < arr.length; i++) {
+    for (var i in arr) {
         var attrs = {"x": 50 * i, "y": 165, "height": arr[i] * 50, "width": 50, "fill": "blue", "stroke": "black"};
         if (attrs.height === 0) attrs.height = 1;
         addEltToSVG(svg, "rect", attrs);
     }                
 }
+
+var svgElement = document.getElementById("histogram");
+createHistogram(svgElement, "Phong");
