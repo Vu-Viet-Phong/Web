@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="urf-8">
+        <title>D3 Page Template</title>
+        <script type="text/javascript" src="../d3.js"></script> 
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            d3.select("body").append("p").text("New paragraph");
+
+            d3.csv("food.csv", function(data) {
+				console.log(data);
+			});
+
+            var rowConverter = function(d) {
+                return {
+                    Food: d.Food, // No conversion
+                    Deliciousness: parseFloat(d.Deliciousness)
+                };
+            }
+            
+            var dataset;
+            d3.csv("food.csv", rowConverter, function(data) {
+                dataset = data; //Once loaded, copy to dataset.
+                generateVis(); //Then call other functions that
+                hideLoadingMsg(); //depend on data being present.
+                console.log(data);
+            });
+
+            var useTheDataLater = function() {
+                //Assuming useTheDataLater() is called sometime after
+                //d3.csv() has successfully loaded in the data,
+                //then the global dataset would be accessible here.
+            };
+        </script>
+    </body>
+</html>
