@@ -21,7 +21,7 @@
                             .domain([0, d3.max(dataset, function(d) { return d[0]; })])
                             .range([0, w]);
 
-            console.log(d3.max(dataset, function(d) { return d[0]; }));
+            console.log(d3.text(dataset, function(d) { return d; }));
 		</script>
 	</body>
 </html>
