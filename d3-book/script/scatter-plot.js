@@ -1,6 +1,6 @@
 // Width and height
-var w = 800;
-var h = 500;
+var w = 500;
+var h = 400;
 var padding = 40;
 
 /*

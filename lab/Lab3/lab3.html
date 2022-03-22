@@ -3,9 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Lab 3</title>
+
         <link rel="stylesheet" href="css/style.css">
-        <script src='https://d3js.org/d3.v4.min.js'></script>
-        <title>Lab 2</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
     </head>
     <body>
         <h3>Name: Vu Viet Phong</h3>
@@ -13,5 +15,82 @@
         <h4>Course: Data science and data visualization</h4>
         <h4 id="lab-title">Lab 3 – D3.js - scales</h4>         
         <p>This is all my own work. I did not copy the code from any other source<p>
+
+        <hr>
+        <h2 id="sub">Scatter Plot</h2>
+        <script type="text/javascript">
+            var rowConverter = function(d) { 
+                return {
+                    "province": d.province,
+                    population: parseFloat(d.population),
+                    "GRDP-VND": parseFloat(d["GRDP-VND"]),
+                    area: parseFloat(d.area),
+                    density: parseInt(d.density)
+                };
+            }
+
+            d3.csv("data/vn-provinces-data.csv", rowConverter, function(error, dataset) {
+                if (error) {
+                    console.log(error);
+                } else { 
+                    console.log(dataset);
+                    
+                    // Width and height
+                    var h = 300; 
+                    var w = 600;
+                    var padding = 40;
+
+                    // Create scale functions
+                    var xScale = d3.scaleLinear()
+                                .domain([0, d3.max(dataset, function(d) { return d.population; })])
+                                .range([padding, w - padding]);
+
+                    var yScale = d3.scaleLinear()
+                                .domain([0, d3.max(dataset, function(d) { return d["GRDP-VND"]; })])
+                                .range([h - padding, padding]);
+
+                    var rScale = d3.scaleSqrt()
+                       .domain([0, d3.max(dataset, function(d) { return d["GRDP-VND"]; })])
+                       .range([0, 10]);
+
+                    // Define X axis
+                    var xAxis = d3.axisBottom()
+                                .scale(xScale);
+
+
+                    // Define Y axis
+                    var yAxis = d3.axisLeft()
+                                .scale(yScale);
+
+                    // Create SVG element
+                    var svg = d3.select("body")
+                                .append("svg")
+                                .attr("width", w)
+                                .attr("height", h)
+                                .attr("fill", "purple");
+
+                    // Create X axis
+                    svg.append("g")
+                    .attr("class", "axis") 
+                    .attr("transform", "translate(0," + (h - padding) + ")")
+                    .call(xAxis);
+
+                    // Create Y axis
+                    svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(" + padding + ",0)")
+                    .call(yAxis);
+
+                    // Create circles
+                    svg.selectAll("circle")
+                    .data(dataset)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", function(d) { return xScale(d.population); })
+                    .attr("cy", function(d) { return yScale(d["GRDP-VND"]); })
+                    .attr("r", function(d) { return rScale(d["GRDP-VND"]); });
+                }
+            });
+        </script>
     </body>
 </html>

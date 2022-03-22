@@ -27,6 +27,14 @@ h3#lab-title {
     font-weight: normal; 
 }
 
+div.bar {
+    display: inline-block;
+    width: 20px;
+    height: 75px; /* Gets overridden by D3-assigned height below */
+    margin-right: 3px;
+    background-color: teal;
+}
+
 .axis path,
 .axis line { 
     stroke: teal; 
