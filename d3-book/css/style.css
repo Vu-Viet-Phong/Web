@@ -1,5 +1,5 @@
 body { 
-    background-color: bisque; 
+    background-color: beige; 
 }
 
 h1 { 
@@ -19,7 +19,8 @@ h2#sub {
 }
 
 h3 { 
-    font-weight: bold; 
+    font-style: italic;
+    font-weight: normal; 
 }
 
 h3#lab-title { 
@@ -27,11 +28,15 @@ h3#lab-title {
     font-weight: normal; 
 }
 
+p {
+    color: chocolate;
+}
+
 div.bar {
     display: inline-block;
     width: 20px;
     height: 75px; /* Gets overridden by D3-assigned height below */
-    margin-right: 3px;
+    margin-right: 5px;
     background-color: teal;
 }
 

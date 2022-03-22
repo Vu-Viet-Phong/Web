@@ -56,7 +56,7 @@ svg.selectAll("text")
    .attr("fill", "white");
 
 // On click, update with new data			
-d3.select("p").on("click", function() {
+d3.select("h3").on("click", function() {
     // New values for dataset
     var numValues = dataset.length; // Count original length of dataset
     var newMaxValue = 100;	            // Highest possible new value
