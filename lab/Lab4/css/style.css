@@ -1,23 +1,23 @@
 h2 { 
-    color: crimson; 
-    font-size: 2em; 
-    font-weight: bold; 
+  color: crimson; 
+  font-size: 2em; 
+  font-weight: bold; 
 }
 
 h2#sub { 
-    color: black; 
-    font-size: x-large;
+  color: black; 
+  font-size: x-large;
 }
 
 h3 { 
-    color: blue; 
+  color: blue; 
 }
 
 h4 { 
-    font-weight: bold; 
+  font-weight: bold; 
 }
 
 h4#lab-title { 
-    font-style: italic; 
-    font-weight: normal; 
+  font-style: italic; 
+  font-weight: normal; 
 }
