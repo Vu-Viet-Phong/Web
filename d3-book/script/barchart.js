@@ -4,10 +4,10 @@ var h = 130;
 var barPadding = 1;
 
 // Data
-var dataset = [];  						            // Initialize empty array
+var dataset = [];  						               // Initialize empty array
 for (var i = 0; i < 25; i++) {			            // Loop 25 times
 	var newNumber = Math.floor(Math.random() * 30); // New random number (0-30)
-	dataset.push(newNumber);			            // Add new number to array
+	dataset.push(newNumber);			               // Add new number to array
 }
 
 // Create SVG element

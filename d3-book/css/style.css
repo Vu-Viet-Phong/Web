@@ -1,54 +1,54 @@
 body { 
-    background-color: beige; 
+  background-color: beige; 
 }
 
 h1 { 
-    color: blue; 
-    text-align: center; 
+	color: blue; 
+	text-align: center; 
 }
 
 h2 { 
-    color: crimson; 
-    font-size: 2em; 
-    font-weight: bold; 
+	color: crimson; 
+	font-size: 2em; 
+	font-weight: bold; 
 }
 
 h2#sub { 
-    color: black; 
-    font-size: x-large; 
+	color: black; 
+	font-size: x-large; 
 }
 
 h3 { 
-    font-style: italic;
-    font-weight: normal; 
+	font-style: italic;
+	font-weight: normal; 
 }
 
 h3#lab-title { 
-    font-style: italic; 
-    font-weight: normal; 
+	font-style: italic; 
+	font-weight: normal; 
 }
 
 p {
-    color: chocolate;
+  color: chocolate;
 }
 
 div.bar {
-    display: inline-block;
-    width: 20px;
-    height: 75px; /* Gets overridden by D3-assigned height below */
-    margin-right: 5px;
-    background-color: teal;
+	display: inline-block;
+	width: 20px;
+	height: 75px; /* Gets overridden by D3-assigned height below */
+	margin-right: 5px;
+	background-color: teal;
 }
 
 .axis path,
 .axis line { 
-    stroke: teal; 
-    shape-rendering: crispEdges; 
+	stroke: teal; 
+	shape-rendering: crispEdges; 
 }
 
 .axis text { 
-    font-family: Optima, Futura, sans-serif; 
-    font-weight: bold; 
-    font-size: 14px; 
-    fill: teal; 
+	font-family: Optima, Futura, sans-serif; 
+	font-weight: bold; 
+	font-size: 14px; 
+	fill: teal; 
 }
