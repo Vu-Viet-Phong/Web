@@ -4,39 +4,39 @@ var h = 300;
 var padding = 30;
 
 // Dynamic, random dataset
-var dataset = [];											// Initialize empty array
-var numDataPoints = 50;										// Number of dummy data points to create
-var maxRange = Math.random() * 1000;						// Max range of new values
-for (var i = 0; i < numDataPoints; i++) {					// Loop numDataPoints times
+var dataset = [];																					// Initialize empty array
+var numDataPoints = 50;																		// Number of dummy data points to create
+var maxRange = Math.random() * 1000;											// Max range of new values
+for (var i = 0; i < numDataPoints; i++) {	 								// Loop numDataPoints times
 	var newNumber1 = Math.floor(Math.random() * maxRange);	// New random integer
 	var newNumber2 = Math.floor(Math.random() * maxRange);	// New random integer
-	dataset.push([newNumber1, newNumber2]);					// Add new number to array
+	dataset.push([newNumber1, newNumber2]);									// Add new number to array
 }
 
-//Create scale functions
+// Create scale functions
 var xScale = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return d[0]; })])
-				.range([padding, w - padding * 2]);
+							.domain([0, d3.max(dataset, function(d) { return d[0]; })])
+							.range([padding, w - padding * 2]);
 
 var yScale = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return d[1]; })])
-				.range([h - padding, padding]);
+							.domain([0, d3.max(dataset, function(d) { return d[1]; })])
+							.range([h - padding, padding]);
 
 // Define X axis
 var xAxis = d3.axisBottom()
-				.scale(xScale)
-			    .ticks(5);
+							.scale(xScale)
+							.ticks(5);
 
 // Define Y axis
 var yAxis = d3.axisLeft()
-				.scale(yScale)
-				.ticks(5);
+							.scale(yScale)
+							.ticks(5);
 
 // Create SVG element
 var svg = d3.select("body")
-			.append("svg")
-			.attr("width", w)
-			.attr("height", h);
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
 
 // Define clipping path
 svg.append("clipPath")
@@ -53,10 +53,10 @@ svg.selectAll("circle")
 	.enter()
 	.append("circle")
 	.attr("cx", function(d) {
-			return xScale(d[0]);
+		return xScale(d[0]);
 	})
 	.attr("cy", function(d) {
-			return yScale(d[1]);
+		return yScale(d[1]);
 	})
 	.attr("r", 2);
 
@@ -75,13 +75,13 @@ svg.append("g")
 // On click, update with new data			
 d3.select("p").on("click", function() {
 		// New values for dataset
-		var numValues = dataset.length;						 		// Count original length of dataset
-		var maxRange = Math.random() * 1000;						// Max range of new values
-		dataset = [];  						 				 		// Initialize empty array
-		for (var i = 0; i < numValues; i++) {				 		// Loop numValues times
+		var numValues = dataset.length;						 								// Count original length of dataset
+		var maxRange = Math.random() * 1000;											// Max range of new values
+		dataset = [];  						 				 												// Initialize empty array
+		for (var i = 0; i < numValues; i++) {				 							// Loop numValues times
 			var newNumber1 = Math.floor(Math.random() * maxRange);	// New random integer
 			var newNumber2 = Math.floor(Math.random() * maxRange);	// New random integer
-			dataset.push([newNumber1, newNumber2]);					// Add new number to array
+			dataset.push([newNumber1, newNumber2]);									// Add new number to array
 		}
 		
 		// Update scale domains
@@ -99,10 +99,10 @@ d3.select("p").on("click", function() {
 					.attr("r", 7);
 			})		
 			.attr("cx", function(d) {
-					return xScale(d[0]);
+				return xScale(d[0]);
 			})
 			.attr("cy", function(d) {
-					return yScale(d[1]);
+				return yScale(d[1]);
 			})
 			/*
 			.on("end", function() { // <-- Executes at start of transition

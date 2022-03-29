@@ -1,6 +1,27 @@
-body { background-color: bisque; }
-h2 { color: crimson; font-size: 2em; font-weight: bold; }
-h2#sub { color: black; font-size: x-large; }
-h3 { color: blue; }
-h4 { font-weight: bold; }
-h4#lab-title { font-style: italic; font-weight: normal; }
+body { 
+  background-color: bisque; 
+}
+
+h2 { 
+  color: crimson; 
+  font-size: 2em; 
+  font-weight: bold; 
+}
+
+h2#sub { 
+  color: black; 
+  font-size: x-large; 
+}
+
+h3 { 
+  color: blue; 
+}
+
+h4 { 
+  font-weight: bold; 
+}
+
+h4#lab-title { 
+  font-style: italic; 
+  font-weight: normal; 
+}
