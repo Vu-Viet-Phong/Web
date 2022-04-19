@@ -1,9 +1,0 @@
-h2 { color: crimson; font-size: 2em; font-weight: bold; }
-h2#sub { color: black; font-size: x-large; }
-h3 { color: blue; }
-h4 { font-weight: bold; }
-h4#lab-title { font-style: italic; font-weight: normal; }
-.axis path,
-.axis line { stroke: teal; stroke-width: 2px; shape-rendering: crispEdges; }
-.axis text { font-family: Optima, Futura, sans-serif; font-weight: bold; font-size: 14px; fill: teal; }
-.axis text#y axis { font-size: 0px; }
