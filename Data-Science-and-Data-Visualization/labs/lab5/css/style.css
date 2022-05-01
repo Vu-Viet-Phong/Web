@@ -3,16 +3,6 @@ h2#sub { color: black; font-size: x-large; }
 h3 { color: blue; }
 h4 { font-weight: bold; }
 h4#lab-title { font-style: italic; font-weight: normal; }
-
-.tooltip {
-    padding: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
-    font-size: 12.5px;
-    font-weight: bold;
-    position: absolute;
-    width: 1F70px;
-    height: 3F8px;
-    pointer-events: none;
-    background: rgb(0, 0, 255); 
-    color: white; 
-}
+.container { border: 1px solid black; border-radius: 5px; box-sizing: border-box; margin: auto; padding: 20px; width: 50%;}
+.tooltip { padding: 10px 10px 10px 10px; border-radius: 10px 10px 10px 10px; font-size: 12.5px; position: absolute; width: 1F70px; height: 3F8px; pointer-events: none; background-color: darkblue;  color: white; }
+.selected { fill:chocolate; opacity: 1 !important; stroke: black;  stroke-width: 1px; }

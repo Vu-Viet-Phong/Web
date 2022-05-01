@@ -20,7 +20,7 @@ d3.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_co
 
 function draw(dataset) {
     // Width and height
-    var width = 800;
+    var width = 700;
     var height = 600;
 
     // Margin
@@ -38,57 +38,57 @@ function draw(dataset) {
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Define X axis
-    var min_long = d3.min(dataset, function (d) { return d.Long; });
-    var max_long = d3.max(dataset, function (d) { return d.Long; });
-    var xScale = d3.scaleLinear().domain([min_long, max_long]).range([0, w]);
-
-    // Define Y axis
     var min_lat = d3.min(dataset, function (d) { return d.Lat; });
     var max_lat = d3.max(dataset, function (d) { return d.Lat; });
-    var yScale = d3.scaleLinear().domain([min_lat, max_lat]).range([h, 0]);
+    var xScale = d3.scaleLinear().domain([min_lat, max_lat]).range([0, w]).nice();
     
+    // Define Y axis
+    var min_long = d3.min(dataset, function (d) { return d.Long; });
+    var max_long = d3.max(dataset, function (d) { return d.Long; });
+    var yScale = d3.scaleLinear().domain([min_long, max_long]).range([h, 0]).nice();
+
     // Create X axis
     scatterplot.append("g").attr("transform", "translate(0," + h + ")").call(d3.axisBottom(xScale));
     
     // Create Y axis
     scatterplot.append("g").call(d3.axisLeft(yScale));
 
-    // Color opacity for the dots
-        var cValue = function (d) { return d.date; }
-        var color = d3.scaleOrdinal().domain(["versicolor"]).range(["#21908dff"])
-
-    // Define the tooltip
-    var tooltip = d3.select("body").append("div").attr("class", "tooltip");
+    // Create brush
+    scatterplot.call(d3.brush().extent([[0, 0], [w, h]]).on("start brush", updateChart));
 
     // Create scatterplot
-    scatterplot.append("g").selectAll("dot").data(dataset).enter().append("circle")
-               .attr("r", 7)
-               .attr("cx", function (d) { return xScale(d.Long) })
-               .attr("cy", function (d) { return yScale(d.Lat) })
-               .style("fill", function (d) { return color(cValue(d)); })
-               .style("opacity", 0.6)
-               .on("mouseover", function (d) { 
-                    tooltip.transition().duration(100).style("text-anchor", "end").style("opacity", 100);
-                    tooltip.html("Country: " + d["Country/Region"] + "<br/> (" + d.Long + ", " + d.Lat + ")" + "<br/> Confirmed cases: " + d.date +")")
-                           .style("left", d3.event.pageX + 5 + "px")
-                           .style("top", d3.event.pageY - 30 + "px"); 
-               })
-               .on("mouseout", function (d) { tooltip.transition().duration(200).style("opacity", 0); });
+    var myCircle = scatterplot.append("g").selectAll("circle").data(dataset).enter().append("circle")
+               .attr("r", 5)
+               .attr("cx", function (d) { return xScale(d.Lat) })
+               .attr("cy", function (d) { return yScale(d.Long) })
+               .attr("fill", "steelblue")
+               .style("opacity", "0.7")
+               .on("mouseover",handleMouseOver)
+               .on("mouseout", handleMouseOut);
 
-    // X label
-    scatterplot.append("text").text("Longitude").style("text-anchor", "middle")
-               .attr("transform", "translate(" + (w / 2) + " ," + (h + margin.top + 20) + ")")
-               .attr("font-family", "Helvetica")
-               .attr("font-weight", 500)
-               .attr("font-size", "15px");
+    // Define the tooltip
+    var tooltip = d3.select("#scatterplot").append("div").attr("class", "tooltip");
 
-    // Y label
-    scatterplot.append("text").text("Latitude").style("text-anchor", "middle")
-               .attr("transform", "rotate(-90)")
-               .attr("y", 0 - margin.left)
-               .attr("x", 0 - (h / 2))
-               .attr("dy", "1em")
-               .attr("font-family", "Helvetica")
-               .attr("font-weight", 500)
-               .attr("font-size", "15px");
+    function handleMouseOver(d, i) {
+        tooltip.transition().duration(100).style("text-anchor", "end").style("opacity", 100);
+        tooltip.html("Country: " + d["Country/Region"] + "<br/>Province/State: " + d["Province/State"] + "<br/> (" + d.Long + ", " + d.Lat + ")" + "<br/> Confirmed cases: " + d.date + ")")
+               .style("left", d3.event.pageX + 5 + "px")
+               .style("top", d3.event.pageY - 30 + "px");
+    }
+
+    function handleMouseOut(d, i) {
+        tooltip.transition().duration(200).style("opacity", 0);
+    }
+
+    function updateChart() {        
+        myCircle.classed("selected", function(d) { 
+            return isBrushed(d3.event.selection, xScale(d.Lat), yScale(d.Long)); 
+        })
+    }
+
+    function isBrushed(brush_coords, cx, cy) {
+        var x0 = brush_coords[0][0], x1 = brush_coords[1][0],
+            y0 = brush_coords[0][1], y1 = brush_coords[1][1];
+        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+    }
 }
