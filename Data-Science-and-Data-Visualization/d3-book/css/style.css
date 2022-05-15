@@ -1,21 +1,17 @@
-body { 
-  background-color: beige; 
-}
-
 h1 { 
 	color: blue; 
 	text-align: center; 
 }
 
 h2 { 
-	color: crimson; 
+	color: black;
 	font-size: 2em; 
 	font-weight: bold; 
 }
 
 h2#sub { 
 	color: black; 
-	font-size: x-large; 
+	font-size: x-5large; 
 }
 
 h3 { 
@@ -31,11 +27,11 @@ h3#lab-title {
 p {
   color: chocolate;
 }
-
+/* 
 div.bar {
 	display: inline-block;
 	width: 20px;
-	height: 75px; /* Gets overridden by D3-assigned height below */
+	height: 75px; 
 	margin-right: 5px;
 	background-color: teal;
 }
@@ -51,4 +47,18 @@ div.bar {
 	font-weight: bold; 
 	font-size: 14px; 
 	fill: teal; 
+}
+ */
+.line {
+	fill: none;
+	stroke: teal;
+	stroke-width: 0.5;
+}
+
+.container {
+	border: 2px solid black;
+	border-radius: 10px;
+	margin: auto;
+	padding: 20px;
+	width:L 95%;
 }

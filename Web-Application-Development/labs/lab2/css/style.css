@@ -76,3 +76,7 @@ input[type=submit] {
     border-radius: 4px;
     resize: vertical;
 }
+
+g {
+    background-color: pink;
+}

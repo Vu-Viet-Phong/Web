@@ -1,0 +1,25 @@
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.line {
+    fill: none;
+    stroke: teal;
+    stroke-width: 0.5;
+}
+
+.safeLevel {
+    stroke: red;
+    stroke-dasharray: 2, 3;
+}
+
+.danger {
+    stroke: red;
+}
+
+.dangerLabel {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    fill: red;
+}
