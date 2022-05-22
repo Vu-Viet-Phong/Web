@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right , #2c3e50, #3498db);
+}
+
+h1, h2, h3, h4, h5 { 
+    font-family: "Open Sans", sans-serif; 
+    font-size: 1 rem; 
+    color:#574545 
+}
+
+svg {
+    width: 700px;
+    height: 300px;
+}
+
+.container {
+    border: 2px solid black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    margin: auto;
+    padding: 20px;
+    width: 50%;
+}
