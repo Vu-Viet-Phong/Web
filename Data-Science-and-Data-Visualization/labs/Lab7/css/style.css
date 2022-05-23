@@ -21,3 +21,8 @@ h4#lab-title {
   font-style: italic; 
   font-weight: normal; 
 }
+
+svg { 
+  width: 500px;
+  height: 1000px;
+}
