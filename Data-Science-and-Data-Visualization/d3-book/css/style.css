@@ -30,3 +30,19 @@ svg {
     padding: 20px;
     width: 70%;
 }
+
+.pan rect {
+    fill: black;
+    opacity: 0.2;
+}
+
+.pan text {
+    fill: black;
+    font-size: 18px;
+    text-anchor: middle;
+}
+
+.pan:hover rect,
+.pan:hover text {
+    fill: blue;
+}
