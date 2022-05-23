@@ -11,13 +11,14 @@ for (var i = 0; i < numDataPoints; i++) {
   dataset.push([newNumber1, newNumber2]);
 }
 
-// Create scale functions
+// Create xscale functions
 var xScale = d3.scaleLinear()
   .domain([0, d3.max(dataset, function(d) {
     return d[0]; 
   })])
   .range([padding, w - padding]);
 
+// Create yscale functions
 var yScale = d3.scaleLinear()
   .domain([0, d3.max(dataset, function(d) {
     return d[1];
@@ -29,6 +30,7 @@ var xAxis = d3.axisBottom()
   .scale(xScale)
   .ticks(5);
 
+// Define Y axis
 var yAxis = d3.axisLeft()
   .scale(yScale)
   .ticks(5);
@@ -39,8 +41,20 @@ var scatterplot = d3.select("#scatterplot")
   .attr("width", w)
   .attr("height", h);
 
+// Define clipping path
+scatterplot.append("clipPath")
+  .attr("id", "chart-area")
+  .append("rect")
+  .attr("x", padding)
+  .attr("y", padding)
+  .attr("width", w - padding * 3)
+  .attr("height", h - padding * 2); 
+
 // Create circles
-scatterplot.selectAll("circle")
+scatterplot.append("g")
+  .attr("id", "circle")
+  .attr("clip-path", "url(#chart-area)")
+  .selectAll("circle")
   .data(dataset)
   .enter()
   .append("circle")
@@ -54,13 +68,13 @@ scatterplot.selectAll("circle")
 
 // Create X axis
 scatterplot.append("g")
-  .attr("class", "axis")
+  .attr("class", "x_axis")
   .attr("transform", "translate(0, " + (h - padding) + ")")
   .call(xAxis);
 
 // Create Y axis
 scatterplot.append("g")
-  .attr("class", "axis")
+  .attr("class", "y_axis")
   .attr("transform", "translate(" + padding + ", 0)")
   .call(yAxis);
 
@@ -78,11 +92,12 @@ d3.select("p")
       dataset.push([newNumber1, newNumber2]);
     }
 
-    // Update scale domains
+    // Update xscale
     xScale.domain([0, d3.max(dataset, function(d) { 
       return d[0]; 
     })]);
-    
+
+    // Update yscale
     yScale.domain([0, d3.max(dataset, function(d) { 
       return d[1]; 
     })]);
@@ -92,10 +107,40 @@ d3.select("p")
       .data(dataset)
       .transition()
       .duration(1000)
+      .on("start", function() {
+        d3.select(this)
+          .attr("fill", "magenta")
+          .attr("r", 3)
+      })
       .attr("cx", function(d) {
         return xScale(d[0]);
       })
       .attr("cy", function(d) {
         return yScale(d[1]);
       })
+      /*    
+      .on("end", function() {
+        d3.select(this)
+          .transition()
+          .duration(1000)
+          .attr("fill", "black")
+          .attr("r", 2);
+      }); 
+      */
+      .transition()
+      .duration(1000)
+      .attr("fill", "black")
+      .attr("r", 2);
+      
+    // Update X axis
+    scatterplot.select(".x_axis")
+      .transition()
+      .duration(1000)
+      .call(xAxis);
+
+    // Update Y axis
+    scatterplot.select(".y_axis")
+      .transition()
+      .duration(1000)
+      .call(yAxis); 
   });

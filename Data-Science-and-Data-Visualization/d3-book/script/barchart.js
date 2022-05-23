@@ -61,52 +61,53 @@ barchart.selectAll("text")
   .attr("fill", "white");
 
 // On click, update with new data
-d3.select("p").on("click", function() {
-  var numValues = dataset.length;
-  var maxValue = 100;	
+d3.select("p")
+  .on("click", function() {
+    var numValues = dataset.length;
+    var maxValue = 100;	
 
-  dataset = [];
-  for (var i = 0; i < numValues; i++) {
-    var newNumber = Math.floor(Math.random() * maxValue);
-    dataset.push(newNumber);
-  }
+    dataset = [];
+    for (var i = 0; i < numValues; i++) {
+      var newNumber = Math.floor(Math.random() * maxValue);
+      dataset.push(newNumber);
+    }
 
-  // Update scale domain
-  yScale.domain([0, d3.max(dataset)]);
+    // Update scale domain
+    yScale.domain([0, d3.max(dataset)]);
 
-  // Update all rects
-  barchart.selectAll("rect")
-    .data(dataset)
-    .transition()
-    .delay(function(d, i) { 
-      return i / dataset.length * 1000; 
-    })
-    .duration(500)
-    .attr("y", function(d) { 
-      return h - yScale(d); 
-    })
-    .attr("height", function(d) { 
-      return yScale(d); 
-    })
-    .attr("fill", function(d) { 
-      return "rgb(0, 0, " + Math.round(d * 10) + ")"; 
-    });
+    // Update all rects
+    barchart.selectAll("rect")
+      .data(dataset)
+      .transition()
+      .delay(function(d, i) { 
+        return i / dataset.length * 1000; 
+      })
+      .duration(500)
+      .attr("y", function(d) { 
+        return h - yScale(d); 
+      })
+      .attr("height", function(d) { 
+        return yScale(d); 
+      })
+      .attr("fill", function(d) { 
+        return "rgb(0, 0, " + Math.round(d * 10) + ")"; 
+      });
 
-  // Update all labels
-  barchart.selectAll("text")
-    .data(dataset)
-    .transition()
-    .delay(function(d, i) { 
-      return i / dataset.length * 1000; 
-    })
-    .duration(500)
-    .text(function(d) { 
-      return d; 
-    })
-    .attr("x", function(d, i) { 
-      return xScale(i) + xScale.bandwidth() / 2; 
-    })
-    .attr("y", function(d, i) { 
-      return h - yScale(d) + 14; 
-    });
-});
+    // Update all labels
+    barchart.selectAll("text")
+      .data(dataset)
+      .transition()
+      .delay(function(d, i) { 
+        return i / dataset.length * 1000; 
+      })
+      .duration(500)
+      .text(function(d) { 
+        return d; 
+      })
+      .attr("x", function(d, i) { 
+        return xScale(i) + xScale.bandwidth() / 2; 
+      })
+      .attr("y", function(d, i) { 
+        return h - yScale(d) + 14; 
+      });
+  });
