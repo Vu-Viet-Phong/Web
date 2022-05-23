@@ -6,7 +6,11 @@ body {
     background: linear-gradient(to right , #2c3e50, #3498db);
 }
 
-h1, h2, h3, h4, h5 { 
+h1 {
+    text-align: center;
+}
+
+h2, h3, h4, h5 { 
     font-family: "Open Sans", sans-serif; 
     font-size: 1 rem; 
     color:#574545 
