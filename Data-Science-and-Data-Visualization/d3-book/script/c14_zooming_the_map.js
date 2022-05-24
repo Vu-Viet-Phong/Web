@@ -26,39 +26,8 @@ var geomapping = d3.select("#geomapping")
   .attr("width", w)
   .attr("height", h);
 
-// Define what to do when dragging
-var dragging = function(d) {
-  //  Get the curent (pre-dragging) translation offset
-  var offset = projection.translate();
-
-  // Augment the offset, following the mouse movement
-  offset[0] += d3.event.dx;
-  offset[1] += d3.event.dy;
-
-  // Update projection with new offset
-  projection.translate(offset);
-
-  // Update all paths and circles
-  geomapping.selectAll("path")
-    .attr("d", path);
-
-  geomapping.selectAll("circle")
-    .attr("cx", function(d) {
-      return projection([d.lon, d.lat])[0];
-    })
-    .attr("cy", function(d) {
-      return projection([d.lon, d.lat])[1];
-    });
-}
-
-// Then define the drag behavior
-var drag = d3.drag()
-  .on("drag", dragging);
-
-// Create a container in which all pan-able elements will live
-var map = geomapping.append("g")
-  .attr("id", "map")
-  .call(drag); // bind the dragging behavior
+// Define what to do when panning or zooming
+var zoomin
 
 // Create a new, invisible background rect to catch drag events
 map.append("rect")
