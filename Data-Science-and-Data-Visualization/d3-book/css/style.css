@@ -41,3 +41,8 @@ svg {
     font-size: 18px;
     text-anchor: middle;
 }
+
+.pan:hover rect,
+.pan:hover text {
+    fill: blue;
+}

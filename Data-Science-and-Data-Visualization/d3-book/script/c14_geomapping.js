@@ -3,17 +3,11 @@ var w = 800, h = 480;
 // Define map projection
 var projection = d3.geoAlbersUsa()
   .translate([w / 2, h / 2])
-  .scale([1000]);         
+  .scale([2000]);         
 
 // Define path generator
 var path = d3.geoPath()
   .projection(projection);
-
-// Create SVG element
-var geomapping = d3.select("#geomapping")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h);
 
 // Define quantize scale to sort data values into buckets of color
 var color = d3.scaleQuantize()
@@ -22,9 +16,49 @@ var color = d3.scaleQuantize()
           "rgb(116, 196, 118)", "rgb(49, 163, 84)", 
           "rgb(0, 109, 44)"
         ]);
-  
+
 // Number formatting for population values
 var formatAsThousands = d3.format(","); // eg. converts 123455 to "123,456"
+
+// Create SVG element
+var geomapping = d3.select("#geomapping")
+  .append("svg")
+  .attr("width", w)
+  .attr("height", h);
+
+// Define what to do when dragging
+var dragging = function(d) {
+  //  Get the curent (pre-dragging) translation offset
+  var offset = projection.translate();
+
+  // Augment the offset, following the mouse movement
+  offset[0] += d3.event.dx;
+  offset[1] += d3.event.dy;
+
+  // Update projection with new offset
+  projection.translate(offset);
+
+  // Update all paths and circles
+  geomapping.selectAll("path")
+    .attr("d", path);
+
+  geomapping.selectAll("circle")
+    .attr("cx", function(d) {
+      return projection([d.lon, d.lat])[0];
+    })
+    .attr("cy", function(d) {
+      return projection([d.lon, d.lat])[1];
+    });
+}
+
+// Then define the drag behavior
+var drag = d3.drag()
+  .on("drag", dragging);
+
+// Create a container in which all pan-able elements will live
+var map = geomapping.append("g")
+  .attr("id", "map")
+  .call(drag); // bind the dragging behavior
 
 // Load in agriculture data
 d3.csv("../data/us-ag-productivity.csv", function(error, data) {
@@ -68,7 +102,7 @@ d3.csv("../data/us-ag-productivity.csv", function(error, data) {
         }
 
         // Bind data and create one path per GeoJSON feature
-        geomapping.selectAll("path")
+        map.selectAll("path")
           .data(json.features)
           .enter()
           .append("path")
@@ -105,9 +139,127 @@ d3.csv("../data/us-ag-productivity.csv", function(error, data) {
             .append("title")  // simple tooltip
             .text(function(d) {
               return d.place + ": Pop. " +  (d.population);
-            });           
+            });
+        
+        createPanButtons();
         });
       }
     });
   }
 });
+
+var createPanButtons = function() {
+  // Create the clickable groups
+  // North
+  var north = geomapping.append("g")
+    .attr("class", "pan")
+    .attr("id", "north")
+
+  north.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", w)
+    .attr("height", 30);
+
+  north.append("text")
+    .attr("x", w / 2)
+    .attr("y", 20)
+    .html("&uarr;");
+  
+  // South
+  var south = geomapping.append("g")
+    .attr("class", "pan")
+    .attr("id", "south");
+  
+  south.append("rect")
+    .attr("x", 0)
+    .attr("y", h - 30)
+    .attr("width", w)
+    .attr("height", 30);
+
+  south.append("text")
+    .attr("x", w / 2)
+    .attr("y", h - 10)
+    .html("&darr;");
+
+  // West
+  var west = geomapping.append("g")
+    .attr("class", "pan")
+    .attr("id", "west");
+
+  west.append("rect")
+    .attr("x", 0)
+    .attr("y", 30)
+    .attr("width", 30)
+    .attr("height", h - 60);
+  
+  west.append("text")
+    .attr("x", 15)
+    .attr("y", h / 2)
+    .html("&larr;");
+
+  // East
+  var east = geomapping.append("g")
+    .attr("class", "pan")
+    .attr("id", "east");
+
+  east.append("rect")
+    .attr("x", w - 30)
+    .attr("y", 30)
+    .attr("width", 30)
+    .attr("height", h - 60);
+
+  east.append("text")
+    .attr("x", w - 15)
+    .attr("y", h / 2)
+    .html("&rarr;");
+  
+  // Panning interaction
+  d3.selectAll(".pan")
+    .on("click", function() {
+      // Get current translation offset
+      var offset = projection.translate();
+
+      // Set how much to move on each click
+      var moveAmount = 50;
+
+      // Which way are we headed?
+      var direction = d3.select(this)
+        .attr("id");
+
+      // Modify the offset, depending on the direction
+      switch (direction) {
+        case "north":
+          offset[1] += moveAmount; // increase y offset
+          break;
+        case "south":
+          offset[1] -= moveAmount; // decrease y offset
+          break;
+        case "west":
+          offset[0] += moveAmount; // increase x offset
+          break;
+        case "east":
+          offset[0] -= moveAmount; // decrease x offset
+          break;
+        default:
+          break;
+      }
+
+      // Update projection with new offset
+      projection.translate(offset);
+
+      // Update all paths and circles
+      geomapping.selectAll("path")
+        .transition()
+        .attr("d", path);
+
+      geomapping.selectAll("circle")
+        .transition()
+        .attr("cx", function(d) {
+          return projection([d.lon, d.lat])[0];
+        })
+        .attr("cy", function(d) {
+          return projection([d.lon, d.lat])[1];
+        });
+    });
+}
