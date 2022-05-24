@@ -28,6 +28,8 @@ var geomapping = d3.select("#geomapping")
 
 // Define what to do when dragging
 var dragging = function(d) {
+  console.log(d3.event);
+
   //  Get the curent (pre-dragging) translation offset
   var offset = projection.translate();
 
@@ -59,6 +61,14 @@ var drag = d3.drag()
 var map = geomapping.append("g")
   .attr("id", "map")
   .call(drag); // bind the dragging behavior
+
+// Create a new, invisible background rect to catch drag events
+map.append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", w)
+  .attr("height", h)
+  .attr("opacity", 0);
 
 // Load in agriculture data
 d3.csv("../data/us-ag-productivity.csv", function(error, data) {
