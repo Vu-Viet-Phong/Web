@@ -3,7 +3,7 @@ var w = 800, h = 480;
 // Define map projection
 var projection = d3.geoAlbersUsa()
   .translate([w / 2, h / 2])
-  .scale([1000]);         
+  .scale([2000]);         
 
 // Define path generator
 var path = d3.geoPath()
@@ -27,7 +27,45 @@ var geomapping = d3.select("#geomapping")
   .attr("height", h);
 
 // Define what to do when panning or zooming
-var zoomin
+var zooming = function(d) {
+  // New offset array
+  var offset = [d3.event.transform.x, d3.event.transform.y];
+
+  // Calculate new scale
+  var newScale = d3.event.transform.k * 2000;
+
+  // Update projection with new offset and scale
+  projection.translate(offset)
+    .scale(newScale);
+
+  // Update all paths and circles
+  geomapping.selectAll("path")
+    .attr("d", path);
+
+  geomapping.selectAll("circle")
+    .attr("cx", function(d) {
+      return projection([d.lon, d.lat])[0];
+    })
+    .attr("cy", function(d) {
+      return projection([d.lon, d.lat])[1];
+    });
+}
+
+// Then define the zoom behavior
+var zoom = d3.zoom()
+  .on("zoom", zooming);
+
+// The center of the county
+var center = projection([-97.0, 39.0]);
+
+// Create a container in which all zoom-able elements will live
+var map = geomapping.append("g")
+  .attr("id", "map")
+  .call(zoom)
+  .call(zoom.transform, d3.zoomIdentity
+    .translate(w / 2, h / 2)
+    .scale(0.25)
+    .translate(-center[0], -center[1]));
 
 // Create a new, invisible background rect to catch drag events
 map.append("rect")
@@ -95,7 +133,7 @@ d3.csv("../data/us-ag-productivity.csv", function(error, data) {
           });
 
         // Load in cities data
-        d3.csv("../data/us-cities.csv", function(error, data) {
+        d3.csv("../data/us-cities.csv", function(data) {
           geomapping.selectAll("circle")
             .data(data)
             .enter()

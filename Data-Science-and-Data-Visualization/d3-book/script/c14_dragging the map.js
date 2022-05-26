@@ -3,7 +3,7 @@ var w = 800, h = 480;
 // Define map projection
 var projection = d3.geoAlbersUsa()
   .translate([w / 2, h / 2])
-  .scale([1000]);         
+  .scale([2000]);         
 
 // Define path generator
 var path = d3.geoPath()
