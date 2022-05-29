@@ -146,7 +146,7 @@ d3.csv("../data/us-ag-productivity.csv", function(error, data) {
             .style("opacity", 0.75)
             .append("title")  // simple tooltip
             .text(function(d) {
-              return d.place + ": Pop. " +  (d.population);
+              return d.place + ": Pop. " +  formatAsThousands(d.population);
             });
         
         createPanButtons();

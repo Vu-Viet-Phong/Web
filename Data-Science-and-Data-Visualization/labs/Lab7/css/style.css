@@ -24,5 +24,29 @@ h4#lab-title {
 
 svg { 
   width: 500px;
-  height: 1000px;
+  height: 800px;
+}
+
+.container {
+  border: 2px solid black;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  width: 80%;
+}
+
+.col-left {
+  float: left;
+  width: 70%;
+}
+
+.feature {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.active {
+  background-color: orange;
 }

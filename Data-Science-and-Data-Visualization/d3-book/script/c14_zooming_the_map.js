@@ -2,8 +2,7 @@ var w = 800, h = 480;
 
 // Define map projection
 var projection = d3.geoAlbersUsa()
-  .translate([w / 2, h / 2])
-  .scale([2000]);         
+  .translate([0, 0]); 
 
 // Define path generator
 var path = d3.geoPath()
@@ -153,9 +152,8 @@ d3.csv("../data/us-ag-productivity.csv", function(error, data) {
             .style("opacity", 0.75)
             .append("title")  // simple tooltip
             .text(function(d) {
-              return d.place + ": Pop. " +  (d.population);
+              return d.place + ": Pop. " +  formatAsThousands(d.population);
             });
-        
         createPanButtons();
         });
       }
@@ -163,6 +161,7 @@ d3.csv("../data/us-ag-productivity.csv", function(error, data) {
   }
 });
 
+//Create panning buttons
 var createPanButtons = function() {
   // Create the clickable groups
   // North
