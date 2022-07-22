@@ -2,5 +2,6 @@ div.bar {
   display: inline-block;
   width: 20px;
   height: 70px;
+  margin-right: 2px;
   background-color: teal;
 }
